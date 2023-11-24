@@ -18,5 +18,5 @@ class DeleteTender(StatesGroup):
     wait_reg_num = State()
 
 
-
-
+class SetTender(StatesGroup):
+    wait_reg_num = State()

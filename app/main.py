@@ -17,6 +17,7 @@ async def main():
         create_tender.router,
         delete_tender.router,
         get_tender.router,
+        set_tender.router,
     )
     await dp.start_polling(bot)
 

@@ -48,5 +48,7 @@ async def create_tender(message: Message, state: FSMContext):
         if tender_id:
             await PostgresOrm().update_tender(tender_id, status='deleted')
             await message.answer('Тендер удален', reply_markup=start_markup())
+            await state.set_state(None)
     else:
         await message.answer('Тендер не найден', reply_markup=start_markup())
+        await state.set_state(None)

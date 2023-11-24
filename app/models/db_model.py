@@ -2,7 +2,7 @@ import datetime
 import uuid
 from typing import List
 from typing import Optional
-from sqlalchemy import ForeignKey, UUID, DateTime
+from sqlalchemy import ForeignKey, UUID, DateTime, UniqueConstraint
 from sqlalchemy import String
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
@@ -39,22 +39,4 @@ class TenderOrm(BaseOrm):
     status: Mapped[str]
 
 
-class SubmittedTender(BaseOrm):
-    __tablename__ = 'submitted_tender'
-    tender_id = mapped_column(UUID, ForeignKey('tender.id',
-                                               ondelete="CASCADE"))
-    tender: Mapped['TenderOrm'] = relationship(lazy='joined')
 
-
-class DeletedTender(BaseOrm):
-    __tablename__ = 'deleted_tender'
-    tender_id = mapped_column(UUID, ForeignKey('tender.id',
-                                               ondelete="CASCADE"))
-    tender: Mapped['TenderOrm'] = relationship(lazy='joined')
-
-
-class WorkedTender(BaseOrm):
-    __tablename__ = 'worked_tender'
-    tender_id = mapped_column(UUID, ForeignKey('tender.id',
-                                               ondelete="CASCADE"))
-    tender_in_work: Mapped['TenderOrm'] = relationship(lazy='joined')

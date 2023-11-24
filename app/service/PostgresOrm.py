@@ -5,7 +5,7 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import joinedload
 
 from db.postgres import PostgresConnectAsync
-from models.db_model import TenderOrm, WorkedTender, SubmittedTender
+from models.db_model import TenderOrm
 
 
 class PostgresOrm(PostgresConnectAsync):
@@ -26,9 +26,9 @@ class PostgresOrm(PostgresConnectAsync):
                     'status': 'worked'
                 }
             )
-            await session.execute(stmt)
-            stmt = insert(WorkedTender).values(
-                {'tender_id': id_tender}
+            stmt = stmt.on_conflict_do_update(
+                index_elements=['url'],
+                set_=dict(name=name, end_date=datetime, status='worked')
             )
             await session.execute(stmt)
             await session.commit()

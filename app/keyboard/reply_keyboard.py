@@ -2,7 +2,8 @@ from aiogram.types import KeyboardButton
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 from models.data import TenderName
-from models.db_model import WorkedTender
+
+
 
 def get_tender_markup():
     builder = ReplyKeyboardBuilder()

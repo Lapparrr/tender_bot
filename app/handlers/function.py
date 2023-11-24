@@ -1,14 +1,17 @@
 from keyboard.reply_keyboard import worked_tender_markup
 from models.data import TenderName
-from models.db_model import WorkedTender, TenderOrm
+from models.db_model import  TenderOrm
 from service.PostgresOrm import PostgresOrm
 
 
-async def choice_tender(message, state):
-    tenders = await PostgresOrm().get_tenders()
+async def choice_tender(message, state, status: str = None):
+    if status:
+        tenders = await PostgresOrm().get_tender_with_status(status)
+    else:
+        tenders = await PostgresOrm().get_tenders()
     await state.update_data(tenders=tenders)
     tender_names = tender_to_tender_name(tenders)
-    text = ''
+    text = 'Текущие тендеры \n'
     for tender in tender_names:
         text += tender.text
     await message.answer(text)
